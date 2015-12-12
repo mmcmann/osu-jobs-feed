@@ -6239,8 +6239,8 @@ function $CacheFactoryProvider() {
  * Adding via the `$templateCache` service:
  *
  * ```js
- * var myApp = angular.module('myApp', []);
- * myApp.run(function($templateCache) {
+ * var JobFeedApplication = angular.module('JobFeedApplication', []);
+ * JobFeedApplication.run(function($templateCache) {
  *   $templateCache.put('templateId.html', 'This is the content of the template');
  * });
  * ```
@@ -10637,7 +10637,7 @@ function $HttpProvider() {
  * Replace or decorate this service to create your own custom XMLHttpRequest objects.
  *
  * ```
- * angular.module('myApp', [])
+ * angular.module('JobFeedApplication', [])
  * .factory('$xhrFactory', function() {
  *   return function createXhr(method, url) {
  *     return new window.XMLHttpRequest({mozSystem: true});
@@ -16644,7 +16644,7 @@ function adjustMatchers(matchers) {
  * Here is what a secure configuration for this scenario might look like:
  *
  * ```
- *  angular.module('myApp', []).config(function($sceDelegateProvider) {
+ *  angular.module('JobFeedApplication', []).config(function($sceDelegateProvider) {
  *    $sceDelegateProvider.resourceUrlWhitelist([
  *      // Allow same origin resource loads.
  *      'self',

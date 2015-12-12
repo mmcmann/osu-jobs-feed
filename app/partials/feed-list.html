@@ -1,0 +1,8 @@
+<h1>OSU Job Feed List</h1>
+<p>This is the partial for view 1.</p>
+<ul class="phones">
+    <li ng-repeat="feed in feeds.feed.entry"
+        class="thumbnail phone-listing">
+        {{ feed.id }} - {{ feed.title }}
+    </li>
+</ul>
