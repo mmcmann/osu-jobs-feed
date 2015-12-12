@@ -5,19 +5,14 @@
 angular.module('JobFeedApplication')
 .controller('FeedListCtrl', ['$scope', 'Feed',
     function ($scope, Feed) {
-        var setData = function(data) {
+        Feed.get({}, function(data) {
             $scope.feeds = data;
             $scope.orderProp = 'age';
-        };
-        Feed.get(setData);
+        });
     }])
 .controller('FeedDetailCtrl', ['$scope', '$routeParams', 'Feed',
     function ($scope, $routeParams, Feed) {
-        $scope.feed = Feed.get({feedId: $routeParams.feedId}, function (feed) {
-            $scope.mainImageUrl = feed.images[0];
+        Feed.get({id: $routeParams.id}, function (data) {
+            $scope.feed = data.feed.entry[0];
         });
-
-        $scope.setImage = function (imageUrl) {
-            $scope.mainImageUrl = imageUrl;
-        };
     }]);

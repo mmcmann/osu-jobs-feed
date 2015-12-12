@@ -1,7 +1,7 @@
 angular.module('com.mmcmann.services', [])
     .factory('Feed', ['$http', function ($http) {
         return {
-            get: function (callback) {
+            get: function (params, callback) {
                 $http.get(
                     '../data/all_jobs.atom',
                     {
@@ -18,6 +18,32 @@ angular.module('com.mmcmann.services', [])
                 success(function (data, status) {
                     // send the converted data back
                     // to the callback function
+                    console.log(params);
+                    var key, count = 0;
+                    var returnData = {"feed" : {"entry" : []}};
+                    for(key in params) {
+                        if(params.hasOwnProperty(key)) {
+                            count++;
+                        }
+                    }
+                    if (count > 0) {
+                        var entries = data.feed.entry;
+                        for (var i = 0; i < entries.length; i++) {
+                            for(key in params) {
+                                if(params.hasOwnProperty(key)) {
+                                    if (params[key] == entries[i][key]) {
+                                        //console.log(entries[i]);
+                                        returnData.feed["entry"].push(entries[i]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (returnData.feed.entry.length > 0) {
+                        data = returnData;
+                    }
+                    console.log(returnData);
+                    console.log(data);
                     callback(data);
                 })
             }

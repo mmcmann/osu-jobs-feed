@@ -1829,7 +1829,7 @@ function assertArgFn(arg, name, acceptArrayAnnotation) {
 
 /**
  * throw error if the name given is hasOwnProperty
- * @param  {String} name    the name to test
+ * @param  {String} name    the name to tests
  * @param  {String} context the context in which the name is used, such as module or directive
  */
 function assertNotHasOwnProperty(name, context) {
@@ -5816,7 +5816,7 @@ function Browser(window, document, $log, $sniffer) {
    * @description
    * Executes a fn asynchronously via `setTimeout(fn, delay)`.
    *
-   * Unlike when calling `setTimeout` directly, in test this function is mocked and instead of using
+   * Unlike when calling `setTimeout` directly, in tests this function is mocked and instead of using
    * `setTimeout` in tests, the fns are queued in an array, which can be programmatically flushed
    * via `$browser.defer.flush()`.
    *
@@ -7855,7 +7855,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           } catch (e) {
             // turns out that under some circumstances IE9 throws errors when one attempts to read
             // comment's node value.
-            // Just ignore it and continue. (Can't seem to reproduce in test case.)
+            // Just ignore it and continue. (Can't seem to reproduce in tests case.)
           }
           break;
       }
@@ -18090,7 +18090,7 @@ function urlIsSameOrigin(requestUrl) {
      <file name="protractor.js" type="protractor">
       it('should display the greeting in the input box', function() {
        element(by.model('greeting')).sendKeys('Hello, E2E Tests');
-       // If we click the button it will block the test runner
+       tests
        // element(':button').click();
       });
      </file>
@@ -23511,7 +23511,7 @@ var ngControllerDirective = [function() {
             webdriver = require('protractor/node_modules/selenium-webdriver');
           });
 
-          // For now, we only test on Chrome,
+          tests
           // as Safari does not load the page with Protractor's injected scripts,
           // and Firefox webdriver always disables content security policy (#6358)
           if (browser.params.browser !== 'chrome') {

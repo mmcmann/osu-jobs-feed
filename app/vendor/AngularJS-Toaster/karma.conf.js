@@ -18,7 +18,7 @@ module.exports = function (config) {
       'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js',
       'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-mocks.js',
       'toaster.js',
-      'test/**/*Spec.js'
+      'tests/**/*Spec.js'
     ],
 
 
@@ -33,7 +33,7 @@ module.exports = function (config) {
     },
 
 
-    // test results reporter to use
+    // tests results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress'],

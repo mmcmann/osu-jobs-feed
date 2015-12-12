@@ -3,6 +3,6 @@
 <ul class="phones">
     <li ng-repeat="feed in feeds.feed.entry"
         class="thumbnail phone-listing">
-        {{ feed.id }} - {{ feed.title }}
+        <a href="#/jobs/{{ feed.id }}">{{ feed.title }}</a>
     </li>
 </ul>
