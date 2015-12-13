@@ -1,9 +1,9 @@
-angular.module('com.mmcmann.services', [])
-    .factory('Feed', ['$http', function ($http) {
+angular.module('JobFeedApplication.Services', [])
+    .factory('Feed', ['$http', 'localConfig', function ($http, localConfig) {
         return {
             get: function (params, callback) {
                 $http.get(
-                    '../data/all_jobs.atom',
+                    localConfig.DATA_SOURCE,
                     {
                         transformResponse: function (data) {
                             // convert the data to JSON and provide
@@ -18,7 +18,6 @@ angular.module('com.mmcmann.services', [])
                 success(function (data, status) {
                     // send the converted data back
                     // to the callback function
-                    console.log(params);
                     var key, count = 0;
                     var returnData = {"feed" : {"entry" : []}};
                     for(key in params) {
@@ -31,6 +30,8 @@ angular.module('com.mmcmann.services', [])
                         for (var i = 0; i < entries.length; i++) {
                             for(key in params) {
                                 if(params.hasOwnProperty(key)) {
+                                    console.log("params[" + key + "] = " + params[key]);
+                                    console.log("entries[i][" + key + "] = " + entries[i][key]);
                                     if (params[key] == entries[i][key]) {
                                         //console.log(entries[i]);
                                         returnData.feed["entry"].push(entries[i]);
@@ -38,12 +39,10 @@ angular.module('com.mmcmann.services', [])
                                 }
                             }
                         }
-                    }
-                    if (returnData.feed.entry.length > 0) {
                         data = returnData;
                     }
-                    console.log(returnData);
-                    console.log(data);
+                    //console.log(returnData);
+                    //console.log(data);
                     callback(data);
                 })
             }

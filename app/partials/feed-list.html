@@ -1,8 +1,41 @@
-<h1>OSU Job Feed List</h1>
-<p>This is the partial for view 1.</p>
-<ul class="phones">
-    <li ng-repeat="feed in feeds.feed.entry"
-        class="thumbnail phone-listing">
-        <a href="#/jobs/{{ feed.id }}">{{ feed.title }}</a>
-    </li>
-</ul>
+<section id="job-add" class="space">
+    <h3>Search</h3>
+    <form>
+        <ul id="search-menu">
+            <li>
+                <label for="frmDate">job title, skills, keywords or department</label>
+                <input type="text" name="q" id="search-field-keywords"
+                       placeholder="Title or keywords">
+            </li>
+            <li>
+                <label for="frmDate"></label>
+                <input type="text" name="date" id="frmDate"
+                       placeholder="Location">
+            </li>
+            <li>
+                <button type='submit'>Find Jobs</button>
+            </li>
+        </ul>
+
+    </form>
+</section>
+<section id="job-list" class="space">
+    <h3 id="job-list-head">All Jobs</h3>
+    <h4 id="job-list-sort">Sort by:
+        <span><a href="#">Title</a></span> |
+        <span><a href="#">Department</a></span>
+    </h4>
+    <div class="clearfix"></div>
+    <ul>
+        <li class="job-listing clearfix" ng-repeat="feed in feeds.feed.entry"
+            class="thumbnail feed-listing">
+            <h3><a href="#/jobs/{{ feed.id }}">{{ feed.title }}</a></h3>
+            <p class="truncate">{{ feed.content }}</p>
+            <ul>
+                <li>{{ feed.published | date : 'MMMM d, yyyy' }}</li>
+                <li>{{ feed.author.name }}</li>
+                <li>{{ feed.id }}</li>
+            </ul>
+        </li>
+    </ul>
+</section>

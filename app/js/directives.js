@@ -1,4 +1,4 @@
-angular.module('com.mmcmann.directives', [])
+angular.module('JobFeedApplication.Directives', [])
     .directive('focus', function () {
         return function (scope, element) {
             element[0].focus();

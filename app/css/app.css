@@ -1,4 +1,220 @@
 /* app css stylesheet */
+/*---- General styles ----*/
+a {
+  color: #3679BF;
+}
+.container {
+  width: 960px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.truncate {
+  width: 640px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+form label {
+  font-size: 11pt;
+  display: block;
+}
+
+/*---- Header styles ----*/
+
+header {
+  background-color: #f0f0f0;
+  border-bottom-width: 0;
+  padding: 44px 25px;
+}
+
+header h1,
+header h2 {
+  margin: 0;
+  line-height: 1;
+}
+
+header h1 {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 36px;
+  /*line-height: 30px;*/
+  letter-spacing: -1.5px;
+}
+header h1 a {
+  text-decoration: none;
+  color: #c00;
+}
+
+header h2 {
+  font-family: Helvetica, Arial, sans-serif;
+  color: #616161;
+  font-size: 13pt;
+  font-weight: normal;
+}
+
+section h3 {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  margin: 0 0 10px 0;
+}
+
+/*---- Main app scope ----*/
+
+#job-app {
+  background-color: #f0f0f0;
+  border-top: none;
+  border-bottom-width: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+/*---- Columns ----*/
+
+#job-list,
+#job-add {
+  padding: 35px 25px;
+  background-color: white;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.job-listing h3 a {
+  text-decoration: none;
+}
+.job-listing {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+#job-list p {
+  margin: 10px 0;
+  font-size: 15px;
+}
+
+.job-listing li:last-child {
+  margin-right: 0;
+}
+.job-listing li {
+  float: left;
+  width: 30%;
+  margin: 0 3% 0 0;
+  font-size: 12px;
+  color: #898989;
+}
+
+#job-list h3#job-list-head {
+  width: 66%;
+  margin: 0;
+  padding: 2px 8px 2px 0;
+  float: left;
+  box-sizing: border-box;
+}
+#job-list h4#job-list-sort {
+  width: 34%;
+  margin: 0;
+  padding: 2px 0 2px 8px;
+  float: left;
+  box-sizing: border-box;
+  text-align: right;
+}
+#sort-menu li {
+  margin-right: 2px;
+  padding: 2px 8px;
+  float: left;
+  position: relative;
+}
+
+#job-add {
+}
+
+#job-add li {
+  margin-bottom: 20px
+}
+
+#job-add li:last-child {
+  margin-bottom: 38px
+}
+
+/* ---- Forms ---- */
+#search-menu li {
+  width: 37%;
+  margin-right: 3%;
+  float: left;
+  position: relative;
+}
+#search-menu li:last-child {
+  width: 20%;
+  margin-right: 0;
+  float: left;
+  position: relative;
+}
+#search-menu label {
+  position: absolute;
+  top: 45px;
+  font-size: 12px;
+  color: #363636;
+}
+#job-add form input[type=text] {
+  background-color: #ebebeb;
+  border: solid 1px #dedede;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  line-height: 30px;
+  font-size: 18px;
+  padding: 5px;
+  margin-top: 2px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+#job-add form button {
+  width: 100%;
+  background-color: #3679BF;
+  border: none;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  color: #fff;
+  font-size: 18px;
+  line-height: 30px;
+  margin-top: 2px;
+  padding: 5px 18px;
+}
+
+/*---- Responsive styles ----*/
+
+@media screen and (max-width: 800px ) {
+  .container {
+    width: 100%;
+  }
+  #job-list, #job-add {
+    width: 100%
+  }
+  #job-add {
+    border-top: 5px solid #f0f0f0;
+  }
+  header {
+    padding: 20px 25px;
+  }
+  header h1 {
+    font-size: 28px;
+  }
+
+}
+
 
 .menu {
   list-style: none;
