@@ -1,9 +1,9 @@
 angular.module('JobFeedApplication.Services', [])
-    .factory('Feed', ['$http', 'localConfig', function ($http, localConfig) {
+    .factory('Feed', ['$http', 'config', function ($http, config) {
         return {
             get: function (params, callback) {
                 $http.get(
-                    localConfig.DATA_SOURCE,
+                    config.DATA_SOURCE,
                     {
                         transformResponse: function (data) {
                             // convert the data to JSON and provide
@@ -47,7 +47,18 @@ angular.module('JobFeedApplication.Services', [])
                 })
             }
         }
-    }]);
+    }])
+    .factory('Departments', ['$resource',
+        function($resource){
+            return $resource('../data/all_jobs.atom', {}, {
+                get: {method:'GET', isArray:true}
+            });
+        }])
+    .factory('DepartmentFilter', function() {
+        return function (input) {
+            return input;
+        }
+    });
 /*
     .factory('Feed', ['$resource',
         function($resource){

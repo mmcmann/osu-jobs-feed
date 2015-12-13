@@ -15,9 +15,10 @@ angular.module('JobFeedApplication', [
         'JobFeedApplication.Services',
         'JobFeedApplication.Directives'
     ])
-    .constant('localConfig', {
+    .constant('config', {
         VERSION: '0.0.1',
         DEBUG: true,
+        OFFSET_Y: 121,
         DATA_SOURCE: '../data/all_jobs.atom'
     })
     .config(['$routeProvider',

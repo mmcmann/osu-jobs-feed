@@ -13,6 +13,7 @@
     "html5-boilerplate": "~5.2.0",
     "AngularJS-Toaster": "toaster#~0.4.181",
     "angular-resource": "~1.4.8",
-    "abdmob/x2js": "~1.1.7"
+    "abdmob/x2js": "~1.1.7",
+    "jquery": "~2.1.4"
   }
 }

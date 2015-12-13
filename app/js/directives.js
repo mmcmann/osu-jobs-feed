@@ -49,4 +49,13 @@ angular.module('JobFeedApplication.Directives', [])
                 });
             }
         };
-    });
+    })
+    .directive('jdScript', [
+        function(){
+            return {
+                restrict: 'EA',
+                controller: 'jdController'
+            };
+        }
+    ]);
+
