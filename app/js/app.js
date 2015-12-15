@@ -5,6 +5,7 @@
 // TODO: Animate sort: http://codepen.io/daleyjem/pen/xbZYpY
 // TODO: Autocomplete
 // TODO: Mobile
+// TODO: Debug output and try/catch blocks
 // TODO: Dashboard: http://www.matchwork.com/job-board-features-and-services/job-search-jobseeker-interface/jobseeker-dashboard/
 
 // Declare app level module which depends on views, and components
@@ -13,7 +14,8 @@ angular.module('JobFeedApplication', [
         'ngRoute',
         'ngAnimate',
         'JobFeedApplication.Services',
-        'JobFeedApplication.Directives'
+        'JobFeedApplication.Directives',
+        'JobFeedApplication.Filters'
     ])
     .constant('config', {
         VERSION: '0.0.1',
