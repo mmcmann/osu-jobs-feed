@@ -6,41 +6,91 @@
             <li>
                 <label for="frmDate">job title, skills, keywords or department</label>
                 <input type="text" name="q" id="search-field-keywords"
-                       placeholder="Title or keywords">
+                       placeholder="Title or keywords" ng-model="query.$">
+                <!--<input type="text" name="t" id="search-field-title"-->
+                       <!--placeholder="Title" ng-model="query.title">-->
             </li>
             <li>
-                <label for="frmDate"></label>
-                <input type="text" name="date" id="frmDate"
-                       placeholder="Location">
+                <label for="input-dept">Choose a department</label>
+                <select name="input-dept" id="input-dept" ng-model="query.author.name"
+                        >
+                    <option ng-repeat="option in departments.availableOptions track by option.id"
+                            value="{{option.name}}">{{option.name}}</option>
+                </select>
+                <!--<label for="frmDate"></label>-->
+                <!--<input type="text" name="date" id="frmDate"-->
+                       <!--placeholder="Location">-->
             </li>
             <li>
-                <button type='submit'>Find Jobs</button>
+                <label for="input-title">Choose a title</label>
+                <select name="input-title" id="input-title" ng-model="query.title"
+                ng-change="query.author.name = {}">
+                    <option ng-repeat="option in selections.titles track by option.id"
+                            value="{{option.name}}">{{option.name}}</option>
+                </select>
+                <!--<label for="frmDate"></label>-->
+                <!--<input type="text" name="date" id="frmDate"-->
+                       <!--placeholder="Location">-->
+            </li>
+            <li>
+                <button ng-click="clearFilter()">Show All</button>
             </li>
         </ul>
+        <div class="detailsSelect" ng-repeat="type in selectionTypes">
 
+            <label for="{{ 'input-filter-' + type.name }}">{{ type.tip }}</label>
+            <select class="form-control variation-dropdown"
+                    name="{{ 'input-filter-' + type.name }}"
+                    id="{{ 'input-filter-' + type.name }}"
+                    ng-options="item.name for item in selections[type.name] track by item.id"
+                    ng-model="selection[type.name]"
+                    ng-change="updateFilter(type.name)"></select>
+        </div>
     </form>
 </section>
 <section id="job-list" class="space">
-    <div ng-controller="FeedListTabCtrl">
+    <div>
         <h3 id="job-list-head">All Jobs</h3>
-        <h4 id="job-list-sort">Sort by:
-            <span><a href ng-click="tab(1)">Date</a></span> |
-            <span><a href ng-click="tab(2)">Title</a></span> |
-            <span><a href ng-click="tab(3)">Department</a></span>
-        </h4>
+        <div id="job-list-sort">
+            <ul id="sort-menu">
+                <li>
+                    Sort by:
+                </li>
+                <li>
+                    <a href ng-click="tab(1)">Date</a>
+                    <span ng-show="sortType === 'date' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType === 'date' && sortReverse" class="fa fa-caret-up"></span>
+                </li>
+                <li>
+                    <a href ng-click="tab(2)">Title</a>
+                    <span ng-show="sortType === 'title' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType === 'title' && sortReverse" class="fa fa-caret-up"></span>
+                </li>
+                <li>
+                    <a href ng-click="tab(3)">Department</a>
+                    <span ng-show="sortType === 'author.name' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType === 'author.name' && sortReverse" class="fa fa-caret-up"></span>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="clearfix"></div>
-    <div ng-controller="FeedListItemCtrl">
+    <div>
         <ul id="job-listing-container">
+            <!--ng-repeat="feed in feeds.feed.entry | filter:search | orderBy:sort track by feed.id"-->
             <li class="job-listing clearfix"
-                ng-repeat="feed in feeds.feed.entry | filter:search | orderBy:sort track by feed.id"
+                ng-repeat="feed in feeds.feed.entry
+                  | filter: query
+                  | filter: selectFilter
+                  | orderBy:sort:sortReverse track by feed.id"
                 class="thumbnail feed-listing">
                 <!--jd-script-->
                 <h3><a href="#/jobs/{{ feed.id }}">{{ feed.title }}</a></h3>
                 <p class="truncate">{{ feed.content }}</p>
                 <ul>
-                    <li>{{ feed.published | date : 'MMMM d, yyyy' }}</li>
-                    <li><a href ng-click="setFilter(feed.author.name)">{{ feed.author.name }}</a></li>
+                    <li>{{ feed.published | date:'longDate' }} {{ feed.published | date:'shortTime' }}</li>
+                    <!--<li><a href ng-click="setFilter(feed.author.name)">{{ feed.author.name }}</a></li>-->
+                    <li>{{ feed.author.name }}</li>
                     <li>{{ feed.id }}</li>
                 </ul>
             </li>
