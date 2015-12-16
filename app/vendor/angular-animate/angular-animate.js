@@ -39,7 +39,7 @@ var CSS_PREFIX = '', TRANSITION_PROP, TRANSITIONEND_EVENT, ANIMATION_PROP, ANIMA
 // Register both events in case `window.onanimationend` is not supported because of that,
 // do the same for `transitionend` as Safari is likely to exhibit similar behavior.
 // Also, the only modern browser that uses vendor prefixes for transitions/keyframes is webkit
-// therefore there is no reason to tests anymore for other vendor prefixes:
+// therefore there is no reason to test anymore for other vendor prefixes:
 // http://caniuse.com/#search=transition
 if (isUndefined(window.ontransitionend) && isDefined(window.onwebkittransitionend)) {
   CSS_PREFIX = '-webkit-';
@@ -1432,7 +1432,7 @@ var $$AnimateCssDriverProvider = ['$$animationProvider', function($$animationPro
 
     var rootBodyElement = jqLite(
       // this is to avoid using something that exists outside of the body
-      // we also special case the doc fragement case because our unit tests code
+      // we also special case the doc fragement case because our unit test code
       // appends the $rootElement to the body after the app has been bootstrapped
       isDocumentFragment(rootNode) || bodyNode.contains(rootNode) ? rootNode : bodyNode
     );

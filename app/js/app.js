@@ -2,27 +2,24 @@
  * License: MIT
  */
 
-// TODO: Animate sort: http://codepen.io/daleyjem/pen/xbZYpY
-// TODO: Autocomplete
-// TODO: Mobile
-// TODO: Debug output and try/catch blocks
-// TODO: Dashboard: http://www.matchwork.com/job-board-features-and-services/job-search-jobseeker-interface/jobseeker-dashboard/
-
 // Declare app level module which depends on views, and components
-// TODO: Get rid of global 'app' variable
+// =================================================================================
 angular.module('JobFeedApplication', [
         'ngRoute',
         'ngAnimate',
         'JobFeedApplication.Services',
-        'JobFeedApplication.Directives',
         'JobFeedApplication.Filters'
     ])
+    // save some site-wide constants
+    // =============================================================================
     .constant('config', {
         VERSION: '0.0.1',
         DEBUG: true,
         OFFSET_Y: 121,
         DATA_SOURCE: '../data/all_jobs.atom'
     })
+    // configure the routes
+    // =============================================================================
     .config(['$routeProvider',
         function ($routeProvider) {
             $routeProvider.
@@ -31,15 +28,11 @@ angular.module('JobFeedApplication', [
                     templateUrl: 'partials/feed-list.html',
                     controller: 'FeedListCtrl'
                 })
-                .when('/jobs/:id', {
-                    title: 'Job Detail',
-                    templateUrl: 'partials/feed-detail.html',
-                    controller: 'FeedDetailCtrl'
-                })
-                .when('/dashboard', {
-                    title: 'Job Dashboard',
-                    templateUrl: 'partials/dashboard.html'
-                })
+                //.when('/jobs/:id', {
+                //    title: 'Job Detail',
+                //    templateUrl: 'partials/feed-detail.html',
+                //    controller: 'FeedDetailCtrl'
+                //})
                 .when('/404', {
                     title: 'Resource not found',
                     templateUrl: 'partials/404.html'

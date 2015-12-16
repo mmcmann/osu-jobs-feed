@@ -225,12 +225,12 @@ angular.mock.$ExceptionHandlerProvider = function() {
    *
    * @param {string} mode Mode of operation, defaults to `rethrow`.
    *
-   *   - `log`: Sometimes it is desirable to tests that an error is thrown, for this case the `log`
+   *   - `log`: Sometimes it is desirable to test that an error is thrown, for this case the `log`
    *            mode stores an array of errors in `$exceptionHandler.errors`, to allow later
    *            assertion of them. See {@link ngMock.$log#assertEmpty assertEmpty()} and
    *            {@link ngMock.$log#reset reset()}
    *   - `rethrow`: If any errors are passed to the handler in tests, it typically means that there
-   *                is a bug in the application or tests, so this mock will make these tests fail.
+   *                is a bug in the application or test, so this mock will make these tests fail.
    *                For any implementations that expect exceptions to be thrown, the `rethrow` mode
    *                will also maintain a log of thrown errors.
    */
@@ -603,7 +603,7 @@ function padNumber(num, digits, trim) {
  * Mock of the Date type which has its timezone specified via constructor arg.
  *
  * The main purpose is to create Date-like instances with timezone fixed to the specified timezone
- * offset, so that we can tests code that depends on local timezone settings without dependency on
+ * offset, so that we can test code that depends on local timezone settings without dependency on
  * the time zone settings of the machine where the code is running.
  *
  * @param {number} offset Offset of the *desired* timezone in hours (fractions will be honored)
@@ -1564,7 +1564,7 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    * Verifies that all of the requests defined via the `expect` api were made. If any of the
    * requests were not made, verifyNoOutstandingExpectation throws an exception.
    *
-   * Typically, you would call this method following each tests case that asserts requests using an
+   * Typically, you would call this method following each test case that asserts requests using an
    * "afterEach" clause.
    *
    * ```js
@@ -1585,7 +1585,7 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    * @description
    * Verifies that there are no outstanding requests that need to be flushed.
    *
-   * Typically, you would call this method following each tests case that asserts requests using an
+   * Typically, you would call this method following each test case that asserts requests using an
    * "afterEach" clause.
    *
    * ```js
@@ -1604,7 +1604,7 @@ function createHttpBackendMock($rootScope, $timeout, $delegate, $browser) {
    * @name $httpBackend#resetExpectations
    * @description
    * Resets all request expectations, but preserves all backend definitions. Typically, you would
-   * call resetExpectations during a multiple-phase tests when you want to reuse the same instance of
+   * call resetExpectations during a multiple-phase test when you want to reuse the same instance of
    * $httpBackend mock.
    */
   $httpBackend.resetExpectations = function() {
@@ -1959,7 +1959,7 @@ angular.module('ngMockE2E', ['ng']).config(['$provide', function($provide) {
  * on the `ngMockE2E` and your application modules and defines the fake backend:
  *
  * ```js
- *   myAppDev = angular.module('myAppDev', ['JobFeedApplication', 'ngMockE2E']);
+ *   myAppDev = angular.module('myAppDev', ['myApp', 'ngMockE2E']);
  *   myAppDev.run(function($httpBackend) {
  *     phones = [{name: 'phone1'}, {name: 'phone2'}];
  *

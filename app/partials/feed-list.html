@@ -1,61 +1,34 @@
 <!-- Controller: FeedListCtrl -->
-<section id="job-add" class="space">
+<section id="job-filter" class="space">
     <h3>Search</h3>
     <form>
-        <ul id="search-menu">
-            <li>
-                <label for="frmDate">job title, skills, keywords or department</label>
-                <input type="text" name="q" id="search-field-keywords"
-                       placeholder="Title or keywords" ng-model="query.$">
-                <!--<input type="text" name="t" id="search-field-title"-->
-                       <!--placeholder="Title" ng-model="query.title">-->
-            </li>
-            <li>
-                <label for="input-dept">Choose a department</label>
-                <select name="input-dept" id="input-dept" ng-model="query.author.name"
-                        >
-                    <option ng-repeat="option in departments.availableOptions track by option.id"
-                            value="{{option.name}}">{{option.name}}</option>
-                </select>
-                <!--<label for="frmDate"></label>-->
-                <!--<input type="text" name="date" id="frmDate"-->
-                       <!--placeholder="Location">-->
-            </li>
-            <li>
-                <label for="input-title">Choose a title</label>
-                <select name="input-title" id="input-title" ng-model="query.title"
-                ng-change="query.author.name = {}">
-                    <option ng-repeat="option in selections.titles track by option.id"
-                            value="{{option.name}}">{{option.name}}</option>
-                </select>
-                <!--<label for="frmDate"></label>-->
-                <!--<input type="text" name="date" id="frmDate"-->
-                       <!--placeholder="Location">-->
+        <ul class="search-menu">
+            <li ng-repeat="type in selectionTypes">
+                <label for="{{ 'input-filter-' + type.name }}">{{ type.tip }}</label>
+                <select class="form-control variation-dropdown"
+                        name="{{ 'input-filter-' + type.name }}"
+                        id="{{ 'input-filter-' + type.name }}"
+                        ng-options="item.name for item in selections[type.name] track by item.id"
+                        ng-model="selection[type.name]"
+                        ng-change="updateFilter(type.name)"></select>
             </li>
             <li>
                 <button ng-click="clearFilter()">Show All</button>
             </li>
         </ul>
-        <div class="detailsSelect" ng-repeat="type in selectionTypes">
-
-            <label for="{{ 'input-filter-' + type.name }}">{{ type.tip }}</label>
-            <select class="form-control variation-dropdown"
-                    name="{{ 'input-filter-' + type.name }}"
-                    id="{{ 'input-filter-' + type.name }}"
-                    ng-options="item.name for item in selections[type.name] track by item.id"
-                    ng-model="selection[type.name]"
-                    ng-change="updateFilter(type.name)"></select>
-        </div>
     </form>
 </section>
 <section id="job-list" class="space">
-    <div>
-        <h3 id="job-list-head">All Jobs</h3>
-        <div id="job-list-sort">
-            <ul id="sort-menu">
-                <li>
-                    Sort by:
-                </li>
+    <h3 id="job-list-head">All Jobs</h3>
+    <div id="job-list-sort">
+        <div>
+            <label for="search-field-keywords">Filter results:</label>
+            <input type="text" name="q" id="search-field-keywords"
+                   placeholder="Title or keywords" ng-model="query.$" focus>
+            <a href ng-click="clearFilter('query')">Clear</a>
+        </div>
+        <div>
+            <ul class="sort-menu clearfix">
                 <li>
                     <a href ng-click="tab(1)">Date</a>
                     <span ng-show="sortType === 'date' && !sortReverse" class="fa fa-caret-down"></span>
@@ -85,7 +58,7 @@
                   | orderBy:sort:sortReverse track by feed.id"
                 class="thumbnail feed-listing">
                 <!--jd-script-->
-                <h3><a href="#/jobs/{{ feed.id }}">{{ feed.title }}</a></h3>
+                <h3><a href="#">{{ feed.title }}</a></h3>
                 <p class="truncate">{{ feed.content }}</p>
                 <ul>
                     <li>{{ feed.published | date:'longDate' }} {{ feed.published | date:'shortTime' }}</li>

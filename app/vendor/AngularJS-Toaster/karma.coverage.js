@@ -1,6 +1,6 @@
 module.exports = function(config) {
 
-	require("./karma.conf.js")(config);
+	require("./karma.conf")(config);
 
 	config.autoWatch = false;
 

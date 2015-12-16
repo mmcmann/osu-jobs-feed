@@ -3,105 +3,90 @@
 /* Controllers */
 
 angular.module('JobFeedApplication')
+    // main controller for the application.
+    // TODO: break up into smaller, nested controllers for scalability
+    // =============================================================================
     .controller('FeedListCtrl', ['$scope', '$rootScope', '$window', '$filter', 'config', 'Feed', 'Departments', 'Titles',
         function ($scope, $root, $window, $filter, $config, Feed, Departments, Titles) {
 
-            Feed.get({}, function (data) {
-                $scope.feeds = $scope.feedsOrig = data; // possible_items
-            });
+            // Controls for the feed display
+            // =====================================================================
+            $scope.sortType     = 'date';   // set the default sort type
+            $scope.sortReverse  = true;     // set the default sort order
+            $scope.query        = '';       // ngModel for the filter input
 
-            $scope.selection = {};
+            // selection variables
+            // =====================================================================
+            $scope.selection = {};          // ngModel for the selections
             $scope.selections = {};
             $scope.selectFilter = {};
             $scope.selectionTypes = [
                 {name: 'departments', tip: 'Choose a department'},
                 {name: 'titles', tip: 'Choose a title'}
-            ]; //variation_dimensions
+            ];
+
+            // Get data from the services
+            // =====================================================================
+            Feed.get({}, function (data) {
+                $scope.feeds = $scope.feedsOrig = data;
+            });
+
             Departments.get({}, function (results) {
-                //$scope.departments = results;
-                $scope.selections[$scope.selectionTypes[0].name] = results; // variation_values
-                //    repeatSelect: null,
-                //    availableOptions: results
-                //};
+                $scope.selections[$scope.selectionTypes[0].name] = results;
             });
 
             Titles.get({}, function (results) {
-                $scope.selections[$scope.selectionTypes[1].name] = results; // variation_values
+                $scope.selections[$scope.selectionTypes[1].name] = results;
             });
 
-            $scope.sortType     = 'date'; // set the default sort type
-            $scope.sortReverse  = true;  // set the default sort order
-            $scope.query   = '';     // set the default search/filter term
-
-            $scope.filters = {};
-            $scope.timer = 0;
-
-            $root.currItemIndex = 0;
-
-            $scope.clearFilter = function () {
-                $scope.query = {};
-                $scope.selection = {};
-                Feed.get({}, function (data) {
-                    $scope.feeds = data; // possible_items
-                });
+            // controller methods
+            // =====================================================================
+            $scope.clearFilter = function (which) {
+                if (typeof which === "undefined") {
+                    $scope.query = {};
+                    $scope.selection = {};
+                    Feed.get({}, function (data) {
+                        $scope.feeds = data; // possible_items
+                    });
+                } else {
+                    $scope[which] = {};
+                }
             };
 
             $scope.updateFilter = function (sectionTypeName) {
                 $scope.feeds = $scope.feedsOrig;
-                //console.log("hi");
                 for (var i = 0; i < $scope.selectionTypes.length; i++) {
-                    //console.log("Are these the same?:");
-                    //console.log($scope.selectionTypes[i].name);
-                    //console.log("called on : " + sectionTypeName);
-                    //console.log("\n\n");
                     if ($scope.selectionTypes[i].name != sectionTypeName) {
-                        $scope.selection[$scope.selectionTypes[i].name] = {};
+                        clearFilter($scope.selectionTypes[i].name);
                     }
                 }
-                var filteredData = $filter('filterSelection')(
+                $scope.feeds = $filter('filterSelection')(
                     sectionTypeName,
                     $scope.feeds.feed.entry,
                     $scope.selection
                 );
-                //console.log("origData");
-                //console.log($scope.feeds);
-                //console.log("filteredData");
-                //console.log(filteredData);
-                $scope.feeds = filteredData;
-                //$filter
-                //$scope.query = {};
-                //$scope.selection = {};
-                //$scope.feeds
-            };
-
-            $scope.setFilter = function (str) {
-                //Feed.get({'//author/name': str}, function (data) {
-                //    $scope.feeds = data;
-                //});
-                //$scope.query = {};
-                $scope.query.title = str;
-                //if ($config.DEBUG) console.log(str);
-                //$('#repeatSelect option[value="' + str + '"]').prop('selected', true);
             };
 
             $scope.tab = function (tabIndex) {
-                // Sort by date
-                if (tabIndex == 1) {
-                    $scope.sortType = 'date';
-                }
-                // Sort by title
-                if (tabIndex == 2) {
-                    $scope.sortType = 'title';
-                }
-                // Sort by department
-                if (tabIndex == 3) {
-                    $scope.sortType = 'author.name';
+                switch (tabIndex) {
+                    case 1: // Sort by date
+                        $scope.sortType = 'date';
+                        break;
+                    case 2: // Sort by title
+                        $scope.sortType = 'title';
+                        break;
+                    case 3: // Sort by department
+                        $scope.sortType = 'author.name';
+                        break;
+                    default:
+                        $scope.sortType = 'date';
                 }
                 $scope.sortReverse = !$scope.sortReverse;
             };
 
             $scope.sort = function (item) {
                 if ($scope.sortType == 'date') {
+                    // need to convert to Date object to sort
                     return new Date(item.published);
                 }
                 if ($scope.sortType == 'author.name') {
@@ -110,77 +95,4 @@ angular.module('JobFeedApplication')
                 return item[$scope.sortType];
             };
 
-            //$scope.$watch('sorter', function() {
-            //    //console.log("sorter");
-            //    $window.clearTimeout($scope.timer);
-            //    $scope.timer = $window.setTimeout(rearrange, 100);
-            //});
-
-            //$scope.$watch($scope.filters, function() {
-            //    console.log($scope.filters);
-            //    $window.clearTimeout($scope.timer);
-            //    $scope.timer = $window.setTimeout(rearrange, 100);
-            //});
-
-            $scope.rearrange = function () {
-                $('.job-listing').each(function (idx, el) {
-                    var $el = $(el);
-                    var newTop = idx * $config.OFFSET_Y;
-
-                    if (newTop != parseInt($el.css('top'))) {
-                        $el.css({
-                                'top': newTop
-                            })
-                            .one('webkitTransitionEnd', function (evt) {
-                                $(evt.target).removeClass('moving');
-                            })
-                            .addClass('moving');
-                    }
-
-                });
-            };
-
-        }])
-    //.controller('FeedListDeptCtrl', ['$scope', 'Departments', function($scope, Departments) {
-    //    Departments.get({}, function (results) {
-    //        //$scope.departments = results;
-    //        $scope.data = {
-    //            repeatSelect: null,
-    //            availableOptions: results
-    //        };
-    //    });
-    //}])
-    //.controller('FeedListTabCtrl', ['$scope',
-    //    function ($scope) {
-    //        $scope.sortType = 'date';
-    //    }])
-    .controller('FeedListItemCtrl', ['$scope', '$rootScope', 'config', 'Feed',
-        function ($scope, $root, $config, Feed) {
-            Feed.get({}, function (data) {
-                $scope.feeds = data;
-            });
-
-            // Update this value dynamically - onclick
-            $scope.filters = "";
-
-        }])
-    .controller('FeedDetailCtrl', ['$scope', '$location', '$routeParams', 'Feed',
-        function ($scope, $location, $routeParams, Feed) {
-            $scope.types = mmUtilities.types;
-            if (!isNaN($routeParams.id)) {
-                Feed.get({id: $routeParams.id}, function (data) {
-                    if ($scope.types.isJSON(data.feed.entry[0])) {
-                        $scope.feed = data.feed.entry[0];
-                    } else {
-                        $location.path("/404");
-                    }
-                });
-            } else {
-                $location.path("/jobs");
-            }
-        }])
-    .controller('jdController', ['$element', '$rootScope', 'config',
-        function ($el, $root, $config) {
-            $el.css({'top': $root.currItemIndex * $config.OFFSET_Y});
-            $root.currItemIndex++;
         }]);
