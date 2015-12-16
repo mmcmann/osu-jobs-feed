@@ -1,7 +1,5 @@
 # OSU Job Board App
 
-Description
-
 ## Getting Started
 
 To get you started you can simply clone the angular-seed repository and install the dependencies:
